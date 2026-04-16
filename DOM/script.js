@@ -10,7 +10,25 @@ const reservationCountInput = reservationModal.querySelector("#count-input");
 const reservationDateInput = reservationModal.querySelector("#datetime-input");
 const reservationEmailInput = reservationModal.querySelector("#email-input");
 
-const confirmationModal = document.querySelector("#confirm-modal");
+const confirmationModal = document.querySelector("#confirmation-modal");
+const confirmationTextEl = confirmationModal.querySelector(".modal__text");
+
+///agregar el boton de cerrar al modal de confirmacion
+const confirmationCloseBtn =
+  confirmationModal.querySelector(".modal__close-btn");
+
+confirmationCloseBtn.addEventListener("click", function () {
+  confirmationModal.classList.remove("modal_is-opened");
+});
+
+// funcion para rellenar la informacion y mandar el formulario
+
+function getConfirmationMessage(values) {
+  const firstName = values.name.split(" ")[0];
+  const dateTime = formatDateTime(values.date);
+  return `¡Hola, ${firstName}! Tu reserva para ${values.count} se ha realizado para ${dateTime}.
+  Se ha enviado un correo electrónico de confirmación a ${values.email}.`;
+}
 //funcion para abrir el modal de reserva al hacer click en el boton de reservar
 reservationButton.addEventListener("click", function () {
   reservationModal.classList.add("modal_is-opened");
@@ -30,17 +48,39 @@ reservationForm.addEventListener("submit", function (evt) {
   console.log(reservationDateInput.value);
   console.log(reservationEmailInput.value);
 
+  const form = evt.target;
   //checkbok
   // checkbox
-  const wantsToSubscribe = reservationModal.querySelector("#subscribe-input");
+  const wantsToSubscribe = form.querySelector("#subscribe-input");
 
   // radio seleccionado
-  const selectedSeating = reservationModal.querySelector(
+  const selectedSeating = form.querySelector(
     'input[name="seatingPreference"]:checked',
   );
-
-  console.log(wantsToSubscribe.checked);
   console.log(selectedSeating.value);
+  console.log(wantsToSubscribe.checked);
+  console.log(confirmationTextEl.textContent);
 
-  reservationForm.reset();
+  const inputValues = {
+    name: reservationNameInput.value,
+    count: reservationCountInput.value,
+    date: reservationDateInput.value,
+    email: reservationEmailInput.value,
+  };
+
+  confirmationTextEl.textContent = getConfirmationMessage(inputValues);
+
+  evt.target.reset();
 });
+
+function formatDateTime(dateTimeStr) {
+  const date = new Date(dateTimeStr);
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const day = date.getDate();
+  const time = date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+  return `${day} de ${month} a las ${time}`;
+}
