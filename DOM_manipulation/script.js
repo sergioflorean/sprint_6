@@ -14,8 +14,25 @@ const addSongForm = container.querySelector("#add-song-form");
 const title = document.querySelector("#song-title-input");
 const artist = document.querySelector("#song-artist-input");
 
+const clearPlaylistBtn = document.querySelector("#clear-playlist-btn");
+clearPlaylistBtn.addEventListener("click", function () {
+  // Escribe tu código aquí
+  const songs = [...songsContainer.children];
+  songs.forEach((song) => {
+    song.remove();
+  });
+
+  renderNoSongs();
+});
+
 function renderHasSongs() {
   noSongsElement.classList.add("no-songs_hidden");
+  clearPlaylistBtn.disabled = false;
+}
+
+function renderNoSongs() {
+  noSongsElement.classList.remove("no-songs_hidden");
+  clearPlaylistBtn.disabled = true;
 }
 
 const songTemplate = document
@@ -39,15 +56,12 @@ function createSongElement(artist, title) {
   songLikeBtn.addEventListener("click", function () {
     console.log("like");
     songLikeBtn.classList.toggle("song__button_active");
-
-    //boton eliminar
-    const songDeleteBtn = songElement.querySelector(
-      ".song__button_type_delete",
-    );
-    songDeleteBtn.addEventListener("click", function () {
-      console.log("delete");
-      songElement.remove();
-    });
+  });
+  //boton eliminar
+  const songDeleteBtn = songElement.querySelector(".song__button_type_delete");
+  songDeleteBtn.addEventListener("click", function () {
+    console.log("delete");
+    songElement.remove();
   });
 
   return songElement;
