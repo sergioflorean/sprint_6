@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mi Libro de Recetas</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">Mis recetas</h1>
+      <button class="header__add-btn">+ Agregar Receta</button>
+    </header>
+
+    <main class="main">
+      <div class="recipes"></div>
+    </main>
+
+    <!-- Modal para detalles -->
+    <div class="modal modal_type_detail hidden">
+      <div class="modal__content">
+        <button class="modal__close-btn">&times;</button>
+        <h2 class="modal__title"></h2>
+        <img class="modal__image" src="" alt="" />
+        <div class="modal__info">
+          <p><strong>Ingredientes:</strong></p>
+          <p class="modal__ingredients"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para nueva receta -->
+    <div class="modal modal_type_form hidden">
+      <div class="modal__content">
+        <button class="modal__close-btn">&times;</button>
+        <h2 class="modal__subtitle">Agregar Nueva Receta</h2>
+        <form class="form" id="form-recipe">
+          <input
+            class="form__input"
+            type="text"
+            name="name"
+            placeholder="Nombre de la receta"
+            required
+          />
+          <input
+            class="form__input"
+            type="url"
+            name="image"
+            placeholder="URL de la imagen"
+          />
+          <textarea
+            class="form__textarea"
+            name="ingredients"
+            placeholder="Lista de ingredientes"
+          ></textarea>
+          <button class="form__submit-btn" type="submit">Guardar Receta</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Template para las tarjetas -->
+    <template id="recipe-template">
+      <div class="recipe">
+        <img class="recipe__image" src="" alt="" />
+        <div class="recipe__info">
+          <h3 class="recipe__name"></h3>
+          <div class="recipe__buttons">
+            <button class="recipe__favourite-btn">⭐</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="./scripts/data.js"></script>
+    <script src="./scripts/functions/createRecipeCard.js"></script>
+    <script src="./scripts/functions/handleFormSubmit.js"></script>
+    <script src="./scripts/functions/showRecipes.js"></script>
+    <script src="./scripts/handle-html.js"></script>
+    <script src="./scripts/index.js"></script>
+  </body>
+</html>
